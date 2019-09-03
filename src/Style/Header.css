@@ -1,6 +1,16 @@
-.header > h4{
-    padding: 1rem;
+/* .header {
+    display: flex;
+    align-items: center;
+} */
+.ant-layout-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 #headerText{
     color: #fff;
+}
+.button-container button{
+    margin-right: 0.5rem; 
+    font-size: 1.2rem;
 }

@@ -1,12 +1,14 @@
 import React from 'react'
 import { Typography } from 'antd';
-const { Title } = Typography;
+import { Layout } from 'antd';
+import '../Style/Footer.css';
 
-function Footer (props){
+const { Title } = Typography;
+function Footer(props) {
     return (
-        <div>
+        <Layout.Footer className = 'footer'>
             <Title level={4}>Time Tracking. Created by Adm1RalDen</Title>
-        </div>
+        </Layout.Footer>
     );
 }
 export default Footer

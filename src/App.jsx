@@ -8,21 +8,15 @@ import './Style/App.css';
 import Contents from './Components/Content';
 import Footers from './Components/Footer';
 import Headers from './Components/Header';
-const { Header, Footer, Content } = Layout;
+const { Footer, Content } = Layout;
 const App = inject('Store')(observer(
     function App(props) {
         return (
             <div>
                 <Layout>
-                    <Header>
-                        <Headers />
-                    </Header>
-                    <Content className='content'>
-                        <Contents />
-                    </Content>
-                    <Footer className='footer'>
-                        <Footers />
-                    </Footer>
+                    <Headers />
+                    <Contents />
+                    <Footers />
                 </Layout>
             </div>
         );
