@@ -59,7 +59,7 @@ const Header = inject('Store')(observer((props) => {
                     <Button type='primary' onClick={upload}><Icon type="upload" /></Button>
                 }
 
-                <Button type='primary' onClick={add}><Icon type="plus" /></Button>
+                {/* <Button type='primary' onClick={add}><Icon type="plus" /></Button> */}
             </div>
 
         </Layout.Header>

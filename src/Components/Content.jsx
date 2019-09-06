@@ -2,10 +2,11 @@
 import React, { useState } from 'react';
 import 'antd/dist/antd.css';
 import '../Style/Content.css';
-import { Table, Input, InputNumber, Popconfirm, Form, Button, Icon } from 'antd';
+import { Table, Input, InputNumber, Popconfirm, Form, Button, Icon, Layout, DatePicker, Row, Col, message as alertMessage } from 'antd';
 import { inject, observer } from 'mobx-react';
-import { Layout } from 'antd';
 
+const moment = require('moment');
+const dateNow = moment().format('L');
 const EditableContext = React.createContext();
 
 function EditableCell(props) {
@@ -50,6 +51,10 @@ function EditableCell(props) {
 }
 
 const EditableTable = inject('Store')(observer(function (props) {
+  const [today, setToday] = useState({ today: undefined, todayStr: '' });
+  const [message, setMessage] = useState('');
+  const [futurePlan, setFuturePlan] = useState('');
+  const [hours, setHours] = useState();
   const { data, setData, editingKey, setEditingKey, counts, setCounts } = props.Store;
   const columns = [
     {
@@ -168,7 +173,27 @@ const EditableTable = inject('Store')(observer(function (props) {
   let edit = (key) => {
     setEditingKey(key);
   }
+  let add = () => {
+    console.log(today, hours, message, futurePlan)
+    if (today !== null && hours > 0 && message !== '' && futurePlan !== '') {
+      let newData = {
+        key: counts.toString(),
+        date: today.todayStr,
+        message: message,
+        futurePlan: futurePlan,
+        workHours: hours
+      };
+      setData([...data, newData]);
+      setCounts(counts + 1);
+      setToday({ today: undefined, todayStr: '' })
+      setMessage('')
+      setFuturePlan('')
+      setHours(null)
+    } else {
+      alertMessage.error('Fill in all the fields')
+    }
 
+  }
   const components = {
     body: {
       cell: EditableCell,
@@ -192,6 +217,36 @@ const EditableTable = inject('Store')(observer(function (props) {
   });
   return (
     <Layout.Content className='content'>
+      <Form>
+        <Form.Item>
+          <DatePicker
+            value={today.today}
+            onChange={(res, resStr) => setToday({ today: res, todayStr: resStr })}
+          />
+
+          <Input.TextArea
+            value={message}
+            onChange={({ target: { value } }) => setMessage(value)}
+            autosize={{ minRows: 1, maxRows: 1 }}
+            style={{ maxWidth: '35vw' }}
+            placeholder='input your message'
+          />
+          <Input.TextArea
+            value={futurePlan}
+            onChange={({ target: { value } }) => setFuturePlan(value)}
+            autosize={{ minRows: 1, maxRows: 1 }}
+            style={{ maxWidth: '35vw' }}
+            placeholder='input your future plan'
+          />
+          <InputNumber
+            value={hours}
+            placeholder='hours'
+            onChange={value => setHours(value)}
+          />
+          <Button type='primary' onClick={add}><Icon type="plus" /></Button>
+
+        </Form.Item>
+      </Form>
       <EditableContext.Provider value={props.form}>
         <Table
           components={components}

@@ -23,3 +23,14 @@
   margin: 2rem;
   background: #fff;
 }
+.ant-form-item{
+  margin-bottom: 0;
+}
+.ant-form-item-children{
+  padding: 0.3rem 0;
+  display: flex;
+  justify-content: center;
+}
+.ant-form-item-children > * {
+  margin: 0 0.2rem;
+}
